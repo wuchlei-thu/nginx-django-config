@@ -1,0 +1,15 @@
+server {
+    listen 80 default_server;
+    server_name default_server;
+    #server_name 10.29.0.16;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /home/chenglei/django-test;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/chenglei/django-test/myproject.sock;
+    }
+}
