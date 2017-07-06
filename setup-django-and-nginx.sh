@@ -7,9 +7,17 @@ cd ~/django-test
 virtualenv env
 source env/bin/activate
 
-pip install django djangorestframework
+pip install django djangorestframework gunicorn psycopg2
 
 django-admin startproject myproject .
 
 cp myproject/settings.py myproject/settings_backup.py
-sed 's/\'django.contrib.staticfiles\',/\'django.contrib.staticfiles\',\n\'rest_framework\',/g' myproject/settings_backup.py > myproject/settings.py
+wget 'https://raw.githubusercontent.com/wuchlei-thu/nginx-django-config/master/settings.py'
+mv settings.py myproject/settings.py
+
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py collectstatic
+
+deactivate
+

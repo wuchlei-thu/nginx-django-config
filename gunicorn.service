@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn Application Server handling myproject
+After=network.target
+
+[Service]
+User=chenglei
+Group=www-data
+WorkingDirectory=/home/chenglei/django-test
+ExecStart=/home/chenglei/django-test/env/bin/gunicorn --workers 3 --bind unix:/home/chenglei/django-test/myproject.sock myproject.wsgi:application
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
